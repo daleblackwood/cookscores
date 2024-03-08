@@ -72,7 +72,9 @@ class Database
 			}
 		}
 
-		error_log($logSQL);
+		if (Utils::isDebug()) {
+			error_log($logSQL);
+		}
 
 		$execution = FALSE;
 		$error = null;

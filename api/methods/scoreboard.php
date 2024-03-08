@@ -106,6 +106,7 @@ function parse_scoreboard_rows($rows) {
     $result = array();
     if (isset($rows) && sizeof($rows) > 0) {
         foreach ($rows as $key => $row) {
+            unset($row['pid']);
             if (isset($row['data'])) {
                 $row['data'] = json_decode($row['data'], true);
             }

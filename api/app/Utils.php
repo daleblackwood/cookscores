@@ -158,7 +158,11 @@ class Utils
 	}
 
 	static function isDebug() {
-		return true;//self::getEnv("DEBUG") == "TRUE";
+		if (getenv('CCSCORES_DEBUG') === '1') {
+			return TRUE;
+		}
+		$addr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+		return $addr === '127.0.0.1' || $addr === '::1';
 	}
 
 	static function urlSafe($str) {

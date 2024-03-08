@@ -16,7 +16,7 @@ function get_replay($game, $sid) {
         throw new ApiError('No score id', 401);
     }
     $result = Database::fetchOne('
-        SELECT replays.sid, replays.replay, scores.game, scores.pid, scores.score,
+        SELECT replays.sid, replays.replay, scores.game, scores.score,
             scores.level, scores.seed, scores.time, scores.ts, scores.data
         FROM replays
         INNER JOIN scores ON scores.sid = replays.sid

@@ -33,6 +33,11 @@ class Request
 			$methodName = 'time';
 		}
 
+		if ($methodName == 'test' && Utils::isDebug() == FALSE) {
+			$this->fail('Method not found: '.$methodName, 404);
+			return;
+		}
+
 		$methodPath = 'methods/'.$methodName.'.php';
 
 		@$imported = include($methodPath);
@@ -48,11 +53,13 @@ class Request
 			$result = call_user_func($runMethodName);
 		}
 		catch (Exception $e) {
-			if (get_class($e) == "ApiError") {
+			if ($e instanceof ApiError) {
 				$this->fail($e->getMessage(), $e->getCode());
 				return;
 			}
-			throw $e;
+			error_log($e);
+			$this->fail('Internal error', 500);
+			return;
 		}
 
 		$this->succeed($result);

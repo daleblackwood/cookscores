@@ -21,6 +21,12 @@ function add_score($data) {
             throw new ApiError('Requires '.$key, 400);
         }
     }
+    if (is_numeric($data['score']) == FALSE) {
+        throw new ApiError('Score must be a number', 400);
+    }
+    if (isset($data['replay']) && strlen($data['replay']) > 1048576) {
+        throw new ApiError('Replay too large', 400);
+    }
     $game = Utils::urlSafe($data['game']);
     $scoreData = Utils::copyKeys($data, $scoreKeys);
     $scoreData['game'] = $game;
